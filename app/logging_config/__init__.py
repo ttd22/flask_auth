@@ -28,6 +28,13 @@ def after_request_logging(response):
 
     log = logging.getLogger("myApp")
     log.info("My App Logger")
+
+    log = logging.getLogger("request")
+    log.info("Request Logger")
+
+    log = logging.getLogger("random")
+    log.debug("This is a random text")
+
     return response
 
 
@@ -37,7 +44,7 @@ def configure_logging():
     log = logging.getLogger("myApp")
     log.info("My App Logger")
     log = logging.getLogger("myerrors")
-    log.info("THis broke")
+    log.error("This broke")
 
 
 
@@ -51,8 +58,7 @@ LOGGING_CONFIG = {
         },
         'RequestFormatter': {
             '()': 'app.logging_config.log_formatters.RequestFormatter',
-            'format': '[%(asctime)s] [%(process)d] %(remote_addr)s requested %(url)s'
-                        '%(levelname)s in %(module)s: %(message)s'
+            'format': '[%(asctime)s] [%(process)d] %(remote_addr)s requested %(url)s [%(levelname)s] in %(module)s: %(message)s'
         }
     },
     'handlers': {
@@ -104,6 +110,13 @@ LOGGING_CONFIG = {
             'maxBytes': 10000000,
             'backupCount': 5,
         },
+        'file.handler.random': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            'filename': 'app/logs/random.log',
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        }
     },
     'loggers': {
         '': {  # root logger
@@ -136,6 +149,16 @@ LOGGING_CONFIG = {
             'level': 'DEBUG',
             'propagate': False
         },
+        'request': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.request'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'random': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.random'],
+            'level': 'DEBUG',
+            'propagate': False
+        }
 
     }
 }
