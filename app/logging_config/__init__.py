@@ -16,6 +16,7 @@ def before_request_logging():
     log.info("My App Logger")
 
 
+
 @log_con.after_app_request
 def after_request_logging(response):
     if request.path == '/favicon.ico':
@@ -43,8 +44,12 @@ def configure_logging():
     logging.config.dictConfig(LOGGING_CONFIG)
     log = logging.getLogger("myApp")
     log.info("My App Logger")
+
     log = logging.getLogger("myerrors")
     log.error("This broke")
+
+    log = logging.getLogger("debug")
+    log.debug("Debug Logger")
 
 
 
@@ -116,6 +121,13 @@ LOGGING_CONFIG = {
             'filename': 'app/logs/random.log',
             'maxBytes': 10000000,
             'backupCount': 5,
+        },
+        'file.handler.debug': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            'filename': 'app/logs/debug.log',
+            'maxBytes': 10000000,
+            'backupCount': 5,
         }
     },
     'loggers': {
@@ -158,6 +170,12 @@ LOGGING_CONFIG = {
             'handlers': ['file.handler.random'],
             'level': 'DEBUG',
             'propagate': False
+        },
+        'debug': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.debug'],
+            'level': 'DEBUG',
+            'propagate': False
+
         }
 
     }
