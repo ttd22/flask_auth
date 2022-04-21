@@ -10,7 +10,7 @@ from app.db.models import User
 users = Blueprint("users", __name__, static_folder="static", template_folder="templates")
 
 
-@auth.route('/users')
+@users.route('/users')
 @login_required
 @admin_required
 def browse_users():
@@ -27,14 +27,14 @@ def browse_users():
                            retrieve_url=retrieve_url, data=data, User=User, record_type="Users")
 
 
-@auth.route('/users/<int:user_id>')
+@users.route('/users/<int:user_id>')
 @login_required
 def retrieve_user(user_id):
     user = User.query.get(user_id)
     return render_template('profile_view.html', user=user)
 
 
-@auth.route('/users/<int:user_id>/edit', methods=['POST', 'GET'])
+@users.route('/users/<int:user_id>/edit', methods=['POST', 'GET'])
 @login_required
 def edit_user(user_id):
     user = User.query.get(user_id)
@@ -49,7 +49,7 @@ def edit_user(user_id):
     return render_template('user_edit.html', form=form)
 
 
-@auth.route('/users/new', methods=['POST', 'GET'])
+@users.route('/users/new', methods=['POST', 'GET'])
 @login_required
 def add_user():
     form = register_form()
@@ -67,7 +67,7 @@ def add_user():
     return render_template('user_new.html', form=form)
 
 
-@auth.route('/users/<int:user_id>/delete', methods=['POST'])
+@users.route('/users/<int:user_id>/delete', methods=['POST'])
 @login_required
 def delete_user(user_id):
     user = User.query.get(user_id)
