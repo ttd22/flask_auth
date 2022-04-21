@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 
 from app.auth.decorators import admin_required
-from app.auth.forms import register_form, UserEditForm
+from app.auth.forms import register_form, user_edit_form
 from app.db import db
 from app.db.models import User
 
