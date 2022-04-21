@@ -1,0 +1,12 @@
+2022-04-21 01:03:07,683 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:03:07] "GET / HTTP/1.1" 200 -
+2022-04-21 01:03:07,933 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:03:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2022-04-21 01:03:53,918 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:03:53] "GET /register HTTP/1.1" 200 -
+2022-04-21 01:28:42,295 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:28:42] "GET /register HTTP/1.1" 200 -
+2022-04-21 01:28:49,888 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:28:49] "GET /login HTTP/1.1" 200 -
+2022-04-21 01:30:50,458 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:30:50] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2022-04-21 01:30:50,490 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:30:50] "GET /login?next=%2Fdashboard HTTP/1.1" 200 -
+2022-04-21 01:31:10,064 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:31:10] "[32mPOST /login?next=%2Fdashboard HTTP/1.1[0m" 302 -
+2022-04-21 01:31:10,085 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:31:10] "GET /login HTTP/1.1" 200 -
+2022-04-21 01:31:25,259 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:31:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2022-04-21 01:31:25,285 [INFO] werkzeug: 172.20.0.1 - - [21/Apr/2022 01:31:25] "GET /login HTTP/1.1" 200 -
+2022-04-21 01:33:47,347 [INFO] werkzeug:  * Detected change in '/home/myuser/app/auth/__init__.py', reloading
