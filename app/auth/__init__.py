@@ -7,7 +7,7 @@ from app.db import db
 from app.db.models import User
 
 auth = Blueprint('auth', __name__, template_folder='templates')
-auth.register_blueprint(user, url_prefix="")
+auth.register_blueprint(users, url_prefix="")
 
 @auth.route('/login', methods=['POST', 'GET'])
 def login():
