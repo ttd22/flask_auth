@@ -16,10 +16,10 @@ users = Blueprint("users", __name__, static_folder="static", template_folder="te
 def browse_users():
     data = User.query.all()
     titles = [('email', 'Email'), ('registered_on', 'Registered On')]
-    retrieve_url = ('auth.retrieve_user', [('user_id', ':id')])
-    edit_url = ('auth.edit_user', [('user_id', ':id')])
-    add_url = url_for('auth.add_user')
-    delete_url = ('auth.delete_user', [('user_id', ':id')])
+    retrieve_url = ('auth.users.retrieve_user', [('user_id', ':id')])
+    edit_url = ('auth.users.edit_user', [('user_id', ':id')])
+    add_url = url_for('auth.users.add_user')
+    delete_url = ('auth.users.delete_user', [('user_id', ':id')])
 
     current_app.logger.info("Browse page loading")
 
@@ -45,7 +45,7 @@ def edit_user(user_id):
         db.session.add(user)
         db.session.commit()
         flash('User Edited Successfully', 'success')
-        return redirect(url_for('auth.browse_users'))
+        return redirect(url_for('auth.users.browse_users'))
     return render_template('user_edit.html', form=form)
 
 
@@ -60,10 +60,10 @@ def add_user():
             db.session.add(user)
             db.session.commit()
             flash('Congratulations, you just created a user', 'success')
-            return redirect(url_for('auth.browse_users'))
+            return redirect(url_for('auth.users.browse_users'))
         else:
             flash('Already Registered')
-            return redirect(url_for('auth.browse_users'))
+            return redirect(url_for('auth.users.browse_users'))
     return render_template('user_new.html', form=form)
 
 
@@ -73,8 +73,8 @@ def delete_user(user_id):
     user = User.query.get(user_id)
     if user.id == current_user.id:
         flash("You can't delete yourself!")
-        return redirect(url_for('auth.browse_users'), 302)
+        return redirect(url_for('auth..users.browse_users'), 302)
     db.session.delete(user)
     db.session.commit()
     flash('User Deleted', 'success')
-    return redirect(url_for('auth.browse_users'), 302)
+    return redirect(url_for('auth.users.browse_users'), 302)
