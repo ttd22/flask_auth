@@ -16,9 +16,6 @@ from faker import Faker
 #         assert response.status_code == 200
 #         assert b"ttd22@njit.edu" in response.data
 #     log.info("user login test")
-    # with application.test_client():
-    #     response = application.test_client().post('login', {email: 'ttd22@njit.edu', password: 'trangdang' })
-    #     assertEquals(current_user.email, 'ttd22@njit.edu')
 
 def test_user_register(application, client):
     log = logging.getLogger("myApp")
