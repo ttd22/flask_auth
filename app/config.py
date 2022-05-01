@@ -1,6 +1,5 @@
 import os
 
-
 class Config(object):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DEBUG = False
@@ -31,9 +30,10 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SESSION_COOKIE_SECURE = False
 
-
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     SESSION_COOKIE_SECURE = False
     DEBUG = True
+    WTF_CSRF_ENABLE = False
+

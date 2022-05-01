@@ -8,6 +8,7 @@ from app.logging_config.log_formatters import RequestFormatter
 from app import config
 
 import os
+import datetime
 
 log_con = flask.Blueprint('log_con', __name__)
 
@@ -16,43 +17,46 @@ log_con = flask.Blueprint('log_con', __name__)
 def before_request_logging():
     current_app.logger.info("Before Request")
     log = logging.getLogger("myApp")
-    log.info("My App Logger")
+    log.info(f"My App Logger activated at {datetime.datetime.now()}")
 
 
 
 @log_con.after_app_request
 def after_request_logging(response):
     if request.path == '/favicon.ico':
+        log.info(f"Favicon request at {datetime.datetime.now()}")
         return response
     elif request.path.startswith('/static'):
+        log.info(f"Static request at {datetime.datetime.now()}")
         return response
     elif request.path.startswith('/bootstrap'):
+        log.info(f"Bootstrap request at {datetime.datetime.now()}")
         return response
-    current_app.logger.info("After Request")
 
+    current_app.logger.info("After Request")
     log = logging.getLogger("myApp")
-    log.info("My App Logger")
+    log.info(f"My App Logger activated at {datetime.datetime.now()}")
 
     log = logging.getLogger("request")
-    log.info("Request Logger")
+    log.info(f"My Request Logger activated at {datetime.datetime.now()}")
 
     log = logging.getLogger("random")
-    log.debug("This is a random text")
+    log.debug(f"My Random Logger activated at {datetime.datetime.now()}")
 
     return response
 
 
-@log_con.before_app_first_request
-def configure_logging():
-    logging.config.dictConfig(LOGGING_CONFIG)
-    log = logging.getLogger("myApp")
-    log.info("My App Logger")
-
-    log = logging.getLogger("myerrors")
-    log.error("This broke")
-
-    log = logging.getLogger("debug")
-    log.debug("Debug Logger")
+# @log_con.before_app_first_request
+# def configure_logging():
+#     logging.config.dictConfig(LOGGING_CONFIG)
+#     log = logging.getLogger("myApp")
+#     log.info("My App Logger")
+#
+#     log = logging.getLogger("myerrors")
+#     log.error("This broke")
+#
+#     log = logging.getLogger("debug")
+#     log.debug("Debug Logger")
 
 
 @log_con.before_app_first_request
@@ -66,6 +70,15 @@ def setup_logs():
     logging.config.dictConfig(LOGGING_CONFIG)
 
 
+    log = logging.getLogger("myApp")
+    log.info("My App Logger")
+
+    current_app.logger.info("myerrors logger is activated")
+    log = logging.getLogger("myerrors")
+    log.error("This broke")
+
+    log = logging.getLogger("debug")
+    log.debug("Debug Logger")
 
 LOGGING_CONFIG = {
     'version': 1,
@@ -89,66 +102,74 @@ LOGGING_CONFIG = {
         'file.handler': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/flask.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'handler.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.myapp': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/myapp.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'myapp.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.request': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'RequestFormatter',
-            'filename': 'app/logs/request.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'request.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.errors': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/errors.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'errors.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.sqlalchemy': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/sqlalchemy.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'sqlalchemy.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.werkzeug': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/werkzeug.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'werkzeug.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.random': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/random.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'random.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.debug': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/debug.log',
+            'filename': os.path.join(config.Config.LOG_DIR,'debug.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
         'file.handler.flask': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
-            'filename': 'app/logs/debug.flask',
+            'filename': os.path.join(config.Config.LOG_DIR,'flask.log'),
             'maxBytes': 10000000,
             'backupCount': 5,
         },
+        'file.handler.updatecsv': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            'filename': os.path.join(config.Config.LOG_DIR, 'updatecsv.log'),
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        },
+
     },
     'loggers': {
         '': {  # root logger
@@ -198,6 +219,11 @@ LOGGING_CONFIG = {
         },
         'flask': {  # if __name__ == '__main__'
             'handlers': ['file.handler.flask'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'updatecsv': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.updatecsv'],
             'level': 'DEBUG',
             'propagate': False
         },

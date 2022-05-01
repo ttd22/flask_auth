@@ -22,13 +22,13 @@ def application():
         yield application
         db.session.remove()
         #drops the database tables after the test runs
-        #db.drop_all()
+        db.drop_all()
 
 @pytest.fixture()
 def add_user(application):
     with application.app_context():
         #new record
-        user = User('keith@webizly.com', 'testtest')
+        user = User('ttd22@njit.edu', 'testtest')
         db.session.add(user)
         db.session.commit()
 
@@ -42,3 +42,4 @@ def client(application):
 def runner(application):
     """This makes the task runner"""
     return application.test_cli_runner()
+
