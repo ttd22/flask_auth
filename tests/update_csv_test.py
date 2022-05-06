@@ -32,3 +32,9 @@ def test_upload_csv(application,client):
 #     music_csv = os.path.join(root, '../uploads/music.csv')
 #     response = test_client.post('/songs/upload', data=music_csv)
 #     assert response.status_code == 201
+
+def test_upload_csv_denied(application,client):
+    application.test_client_class = FlaskLoginClient
+    assert db.session.query(User).count() == 0
+    response = client.get('/songs/upload')
+    assert response.status_code == 302
