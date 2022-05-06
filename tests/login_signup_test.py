@@ -16,29 +16,38 @@ from faker import Faker
 #         assert response.status_code == 200
 #         assert b"ttd22@njit.edu" in response.data
 #     log.info("user login test")
+#
+# def test_user_register(application, client):
+#     log = logging.getLogger("myApp")
+#     with application.app_context():
+#         form = register_form
+#         form.email = "ttd22@njit.edu"
+#         form.password = "trangdang"
+#         form.confirm = "trangdang"
+#         # assert form.validate_on_submit(form) == "fdd"
+#         assert form.validate
+#     log.info("user register test")
+#     # client = application.test_client()
+#     # data = {'email': 'ttd22@njit.edu','password': 'trangdang'}
+#     # # res = client.post("/login",data,buffered=True,
+#     # #                        content_type='multipart/form-data')
+#     # res = client.post('/login',data=data)
+#     # assert res.status_code == 200
+#
+# def test_user_login(application, client):
+#     log = logging.getLogger("myApp")
+#     with application.test_client():
+#         form = login_form
+#         form.email = "ttd22@njit.edu"
+#         form.password = "trangdang"
+#         assert form.validate
+#     log.info("user login test")
 
-def test_user_register(application, client):
-    log = logging.getLogger("myApp")
-    with application.app_context():
-        form = register_form
-        form.email = "ttd22@njit.edu"
-        form.password = "trangdang"
-        form.confirm = "trangdang"
-        # assert form.validate_on_submit(form) == "fdd"
-        assert form.validate
-    log.info("user register test")
-    # client = application.test_client()
-    # data = {'email': 'ttd22@njit.edu','password': 'trangdang'}
-    # # res = client.post("/login",data,buffered=True,
-    # #                        content_type='multipart/form-data')
-    # res = client.post('/login',data=data)
-    # assert res.status_code == 200
 
-def test_user_login(application, client):
-    log = logging.getLogger("myApp")
-    with application.test_client():
-        form = login_form
-        form.email = "ttd22@njit.edu"
-        form.password = "trangdang"
-        assert form.validate
-    log.info("user login test")
+# def test_user_register(application, client):
+#     """ Tests register w/ improper credentials. Passwords don't match. """
+#     form = register_form()
+#     form.email.data = "joebob@joe.com"
+#     form.password.data = "jimmy1941"
+#     form.confirm.data = "jimmy1942"
+#     assert not form.validate()
