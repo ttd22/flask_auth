@@ -13,6 +13,12 @@ class login_form(FlaskForm):
         validators.length(min=6, max=35)
     ])
     submit = SubmitField()
+    # @property
+    # def data(self):
+    #     d = super(WTForm, self).data
+    #     if 'csrf_token' in d:
+    #         d.pop('csrf_token')
+    #     return d
 
 
 class register_form(FlaskForm):
