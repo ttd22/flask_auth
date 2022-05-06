@@ -6,7 +6,7 @@ from app.db.models import User, Song
 from app.auth.forms import csv_upload
 from flask_login import FlaskLoginClient
 
-def test_upload_csv(application,client):
+def test_upload_csv(application):
     application.test_client_class = FlaskLoginClient
     user = User('ttd22@njit.edu', 'testtest', True)
     # add it to get ready to be committed
