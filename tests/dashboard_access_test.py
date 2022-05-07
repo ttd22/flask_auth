@@ -7,9 +7,7 @@ def test_access_dashboard_accepted(application):
     application.test_client_class = FlaskLoginClient
 
     user = User('ttd22@njit.edu', 'testtest', True)
-    # add it to get ready to be committed
     db.session.add(user)
-    # call the commit
     db.session.commit()
     assert user.email == 'ttd22@njit.edu'
     assert db.session.query(User).count() == 1
@@ -21,7 +19,9 @@ def test_access_dashboard_accepted(application):
 
 
 def test_access_dashboard_denied(application, client):
-    # application.test_client_class = FlaskLoginClient
+    application.test_client_class = FlaskLoginClient
     assert db.session.query(User).count() == 0
-    response = client.get('/dashboard')
-    assert response.status_code == 302
+    with application.test_client(user = None) as client:
+        # This request already has a user logged in.
+        response = client.get('/dashboard')
+        assert response.status_code == 302
